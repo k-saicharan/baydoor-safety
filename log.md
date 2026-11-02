@@ -24,3 +24,12 @@
 - Validated strict Anti-AI-Slop design guidelines: warm dark codex palette (#14120f base, #faf6ee ink), Fraunces and Space Mono typography, solid hairline 1px rules, zero gradients, zero radial glow orbs.
 - Conducted automated python audit confirming zero em dash characters across all project files.
 - Verified clean HTTP serving (HTTP 200) and node syntax check on JavaScript bundle.
+
+## 2026-11-02: UX Refactor, Inbound Contact Capture & Smart Referrer Navigation
+
+- Refactored user interface to eliminate heavy vertical scroll: implemented a 3-card executive summary strip (Hazard, Deterministic Interlock, Hardware Reality) and tucked in-depth engineering parameters, PUWER compliance memo, BOM table, contractor model, and controller pinouts into 5 collapsible details drawers.
+- Added prominent Inbound Pilot & Inquiries Station with Sai Charan, London, UK, direct mailto action button, and GitHub repository links for traffic traction.
+- Implemented smart referrer back-navigation: visitors from portfolios-chi-one.vercel.app dynamically receive a back navigation pill via referrer and ?ref=portfolio parameter.
+- Deployed update to Vercel production at https://baydoor-safety.vercel.app (HTTP 200 confirmed).
+- Updated canonical portfolio at https://portfolios-chi-one.vercel.app with ?ref=portfolio tracking.
+- Codified non-negotiable contact and information architecture rules into prototype-deployment-operator and prototype-distribution-operator system instructions.
