@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BayDoor SDR-24: Deterministic Blind-Bay Warning System</title>
+  
+  <!-- Anti-AI-Slop Typographic Pairing: Fraunces & Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Three.js and OrbitControls via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <!-- Masthead & System Identity Bar -->
+  <header class="system-masthead">
+    <div class="masthead-left">
+      <div class="system-tag">ENGINEERING SPECIFICATION & DIGITAL TWIN // REV 2.4</div>
+      <h1 class="system-title">BayDoor <span>SDR-24</span></h1>
+      <p class="system-subtitle">Deterministic Blind-Bay Safety Warning System : 24VDC Industrial Control Interface</p>
+    </div>
+    
+    <div class="masthead-right">
+      <div class="meta-block">
+        <span class="meta-label">STATUTORY COMPLIANCE</span>
+        <span class="meta-value">PUWER 1998 Reg 24 : IEC 60204-1</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">ORIGIN & LOCATION</span>
+        <span class="meta-value">London, UK : Logistics Operations</span>
+      </div>
+      <div class="meta-block">
+        <span class="meta-label">HARDWARE BOM</span>
+        <span class="meta-value highlight-copper">£39.65 Single / £26.97 Bulk</span>
+      </div>
+      <div class="audio-control-wrapper">
+        <button id="btn-toggle-audio" class="action-btn btn-secondary" title="Toggle ISO 7731 Swept Piezo Sounder">
+          <span class="icon" id="audio-icon">[AUDIO: OFF]</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport Grid: 3D Simulation & Live Circuit State Machine -->
+  <main class="viewport-grid">
+    
+    <!-- Left Column: 3D Interactive Warehouse Simulation -->
+    <section class="simulation-section">
+      <div class="section-header">
+        <div class="header-left">
+          <span class="view-tag">3D DIGITAL TWIN</span>
+          <h2 class="view-title">Warehouse Blind-Bay Physical Simulation</h2>
+        </div>
+        <div class="header-controls">
+          <div class="camera-presets">
+            <span class="preset-label">CAMERA:</span>
+            <button class="cam-btn active" data-cam="isometric">Isometric</button>
+            <button class="cam-btn" data-cam="pedestrian">Pedestrian View</button>
+            <button class="cam-btn" data-cam="driver">Forklift View</button>
+            <button class="cam-btn" data-cam="top">Plan View</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Canvas Container -->
+      <div class="canvas-container" id="canvas-container">
+        <!-- Interactive 3D Canvas injected here by Three.js -->
+        
+        <!-- Live Physical Overlay HUD -->
+        <div class="sim-hud">
+          <div class="hud-item">
+            <span class="hud-label">DOOR POSITION</span>
+            <span class="hud-val" id="hud-door-pos">0.0 m (CLOSED)</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">FORKLIFT SPEED</span>
+            <span class="hud-val" id="hud-forklift-spd">0.0 km/h</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">DISTANCE TO THRESHOLD</span>
+            <span class="hud-val" id="hud-distance">7.5 m</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">FAR-SIDE STROBE</span>
+            <span class="hud-val status-quiescent" id="hud-strobe-state">QUIESCENT</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">ACOUSTIC OUTPUT</span>
+            <span class="hud-val status-quiescent" id="hud-audio-state">0 dBA (SILENT)</span>
+          </div>
+        </div>
+
+        <!-- Blind Zone Alert Banner -->
+        <div class="blind-zone-banner" id="blind-zone-banner">
+          <span class="hazard-indicator">HAZARD ACTIVE:</span>
+          <span class="hazard-text">Forklift approaching obscured bay threshold. Far-side early alert active!</span>
+        </div>
+      </div>
+
+      <!-- Simulation Scenario Controls & Timeline Bar -->
+      <div class="sim-controls-bar">
+        <div class="scenario-buttons">
+          <button id="btn-scenario-standard" class="scenario-btn active">
+            <span class="btn-step">SCENARIO 1</span>
+            <span class="btn-name">BayDoor Active (Early Warning)</span>
+          </button>
+          <button id="btn-scenario-unprotected" class="scenario-btn">
+            <span class="btn-step">SCENARIO 2</span>
+            <span class="btn-name">Without BayDoor (Standard Near-Miss)</span>
+          </button>
+        </div>
+
+        <div class="playback-controls">
+          <button id="btn-actuate-door" class="action-btn btn-primary">
+            [ACTUATE DOOR OPEN]
+          </button>
+          <button id="btn-close-door" class="action-btn btn-secondary">
+            [CLOSE DOOR]
+          </button>
+          <button id="btn-reset-sim" class="action-btn btn-tertiary">
+            [RESET SCENE]
+          </button>
+        </div>
+      </div>
+
+      <!-- Key Insight Margin Note -->
+      <div class="margin-note-bar">
+        <div class="note-col">
+          <strong>THE COMPLIANCE FAILURE:</strong> Standard safety rules demand drivers honk before crossing bay doors. Under high-throughput shift pressure, drivers skip honking up to 48% of passes.
+        </div>
+        <div class="note-col">
+          <strong>THE DETERMINISTIC FIX:</strong> BayDoor triggers the far-side strobe and sounder automatically at t=15ms of actuator command, 3.2 seconds before the forklift physically clears the threshold.
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Live Circuit Schematic & Telemetry Console -->
+    <section class="circuit-section">
+      <div class="section-header">
+        <div class="header-left">
+          <span class="view-tag">CIRCUIT EMULATOR</span>
+          <h2 class="view-title">24V Galvanic Interface State Machine</h2>
+        </div>
+        <div class="status-indicator-box">
+          <span class="dot-indicator" id="circuit-dot"></span>
+          <span class="status-label" id="circuit-status-text">SYSTEM STANDBY (24.1V)</span>
+        </div>
+      </div>
+
+      <!-- Live Electrical State Diagram (Interactive SVG) -->
+      <div class="circuit-diagram-wrapper">
+        <svg id="circuit-svg" viewBox="0 0 540 380" class="circuit-svg">
+          <!-- Background Grid & Wire Traces -->
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#b38a5f" />
+            </marker>
+          </defs>
+
+          <!-- 24VDC Controller Auxiliary Rail -->
+          <g class="circuit-block" id="block-controller">
+            <rect x="15" y="20" width="145" height="150" class="block-rect" />
+            <text x="25" y="42" class="block-title">DOOR CONTROLLER</text>
+            <text x="25" y="60" class="block-sub">Hormann / Crawford 24V</text>
+            
+            <!-- Terminal Pins -->
+            <circle cx="145" cy="85" r="4" class="term-pin" />
+            <text x="75" y="90" class="pin-label">+24V AUX</text>
+            
+            <circle cx="145" cy="135" r="4" class="term-pin" />
+            <text x="75" y="140" class="pin-label">RELAY NO</text>
+
+            <!-- Relay Contact Graphic -->
+            <line x1="45" y1="135" x2="80" y2="135" class="wire-static" />
+            <line id="relay-arm" x1="80" y1="135" x2="115" y2="115" class="wire-switch" />
+            <circle cx="80" cy="135" r="2.5" class="switch-pivot" />
+            <circle cx="118" cy="135" r="2.5" class="switch-contact" />
+            <line x1="120" y1="135" x2="145" y2="135" class="wire-static" />
+          </g>
+
+          <!-- Galvanic Optocoupler Isolation Barrier -->
+          <g class="circuit-block" id="block-opto">
+            <rect x="195" y="20" width="150" height="150" class="block-rect highlight-border" />
+            <text x="205" y="42" class="block-title">OPTOISOLATOR IC1</text>
+            <text x="205" y="60" class="block-sub">3,750 Vrms Barrier</text>
+            
+            <!-- Opto LED -->
+            <path d="M 230 75 L 245 85 L 230 95 Z" class="opto-led" id="opto-led-icon" />
+            <line x1="230" y1="70" x2="230" y2="100" class="wire-static" />
+            
+            <!-- Isolation Dotted Line -->
+            <line x1="270" y1="35" x2="270" y2="155" class="iso-barrier-line" stroke-dasharray="4,4" />
+            <text x="274" y="150" class="iso-text">4kV ISO</text>
+            
+            <!-- Phototransistor -->
+            <line x1="295" y1="70" x2="295" y2="100" class="wire-static" />
+            <line x1="295" y1="80" x2="315" y2="70" class="wire-static" />
+            <line x1="295" y1="90" x2="315" y2="100" class="wire-static" />
+            <circle cx="315" cy="70" r="3" class="term-pin" />
+            <circle cx="315" cy="100" r="3" class="term-pin" />
+          </g>
+
+          <!-- 2.5s Monostable RC Timing Network -->
+          <g class="circuit-block" id="block-timer">
+            <rect x="195" y="200" width="150" height="155" class="block-rect" />
+            <text x="205" y="222" class="block-title">PULSE SHAPER</text>
+            <text x="205" y="240" class="block-sub">ISO 7731 Auto-Mute</text>
+
+            <!-- Timing Capacitor & Resistor Indicator -->
+            <rect x="215" y="260" width="45" height="16" class="comp-box" />
+            <text x="220" y="272" class="comp-val">12 kΩ</text>
+
+            <line x1="285" y1="255" x2="285" y2="280" class="cap-plate" />
+            <line x1="292" y1="255" x2="292" y2="280" class="cap-plate" />
+            <text x="276" y="300" class="comp-val">220 µF</text>
+
+            <!-- Charge Progress Indicator -->
+            <rect x="215" y="325" width="110" height="8" class="charge-bar-bg" />
+            <rect x="215" y="325" width="0" height="8" class="charge-bar-fill" id="charge-progress" />
+            <text x="215" y="348" class="timer-countdown" id="timer-text">TIMER: 0.0s / 2.5s</text>
+          </g>
+
+          <!-- Far-Side Strobe Beacon & Piezo Alert Station -->
+          <g class="circuit-block" id="block-output">
+            <rect x="380" y="20" width="145" height="335" class="block-rect" />
+            <text x="390" y="42" class="block-title">FAR-SIDE STATION</text>
+            <text x="390" y="60" class="block-sub">RS PRO 235-9003</text>
+
+            <!-- Beacon Visual Flash Indicator -->
+            <circle cx="452" cy="115" r="32" class="strobe-body" id="strobe-circle" />
+            <text x="432" y="120" class="strobe-icon" id="strobe-text">STROBE</text>
+
+            <!-- Sounder Acoustic Waves -->
+            <path d="M 430 215 L 445 200 L 445 240 Z" class="horn-shape" />
+            <rect x="420" y="210" width="10" height="20" class="horn-shape" />
+            <path d="M 455 205 Q 465 220 455 235" class="sound-wave" id="wave-1" />
+            <path d="M 465 195 Q 480 220 465 245" class="sound-wave" id="wave-2" />
+            <path d="M 475 185 Q 495 220 475 255" class="sound-wave" id="wave-3" />
+            <text x="420" y="280" class="sounder-dBA" id="sounder-dBA-val">0 dBA (MUTED)</text>
+            <text x="410" y="300" class="sounder-freq">2.4 - 2.9 kHz Swept</text>
+            <text x="415" y="320" class="sounder-rating">IP65 Polycarbonate</text>
+          </g>
+
+          <!-- Connecting Bus Wires -->
+          <!-- Power wire from Controller to Opto -->
+          <line id="wire-pwr" x1="145" y1="85" x2="195" y2="85" class="wire-bus" />
+          <!-- Signal wire from Controller Aux to Opto -->
+          <line id="wire-aux" x1="145" y1="135" x2="195" y2="135" class="wire-bus" />
+          <!-- Opto to Timer Bus -->
+          <line id="wire-opto-timer" x1="315" y1="100" x2="315" y2="200" class="wire-bus" />
+          <!-- Timer to Output Bus -->
+          <line id="wire-timer-out" x1="345" y1="270" x2="380" y2="270" class="wire-bus" />
+          <!-- Strobe Power Bus -->
+          <line id="wire-strobe-bus" x1="345" y1="85" x2="380" y2="85" class="wire-bus" />
+        </svg>
+      </div>
+
+      <!-- Live Electrical Telemetry Readout -->
+      <div class="telemetry-grid">
+        <div class="telem-cell">
+          <span class="telem-label">TERMINAL VOLTAGE</span>
+          <span class="telem-value" id="telem-voltage">24.12 VDC</span>
+        </div>
+        <div class="telem-cell">
+          <span class="telem-label">OPTO CURRENT</span>
+          <span class="telem-value" id="telem-current">0.00 mA</span>
+        </div>
+        <div class="telem-cell">
+          <span class="telem-label">ALERT LATENCY</span>
+          <span class="telem-value highlight-copper" id="telem-latency">14.2 ms</span>
+        </div>
+        <div class="telem-cell">
+          <span class="telem-label">DIELECTRIC ISO</span>
+          <span class="telem-value">> 3,750 Vrms</span>
+        </div>
+      </div>
+
+      <!-- Circuit Interactive Bench Controls -->
+      <div class="circuit-bench-controls">
+        <div class="control-toggle-row">
+          <span class="toggle-name">SIMULATE 24V COIL COMMAND:</span>
+          <button id="btn-toggle-coil" class="btn-toggle">COIL OFF</button>
+        </div>
+        <div class="control-toggle-row">
+          <span class="toggle-name">FAIL-SAFE POWER LOSS TEST:</span>
+          <button id="btn-test-powerloss" class="btn-toggle">MAINS OK</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Technical Brief, Compliance & Specification Drawer Tabs -->
+  <section class="dossier-section">
+    <div class="dossier-tabs-nav">
+      <button class="dossier-tab-btn active" data-tab="tab-specs">Technical Specification</button>
+      <button class="dossier-tab-btn" data-tab="tab-compliance">PUWER 1998 Compliance</button>
+      <button class="dossier-tab-btn" data-tab="tab-bom">Bill of Materials (£39.65)</button>
+      <button class="dossier-tab-btn" data-tab="tab-channel">Contractor Channel Model</button>
+      <button class="dossier-tab-btn" data-tab="tab-controllers">Controller Pinout Matrix</button>
+    </div>
+
+    <div class="dossier-content-card">
+      
+      <!-- Tab 1: Engineering Specs -->
+      <div class="tab-pane active" id="tab-specs">
+        <div class="pane-grid">
+          <div class="pane-text">
+            <h3>BayDoor SDR-24 Engineering Parameters</h3>
+            <p>
+              Designed specifically for commercial loading bays, high-speed sectional doors, and industrial roller shutters. 
+              The module connects as an auxiliary monitor across the door motor run relay, driving an isolated far-side warning station.
+            </p>
+            <table class="dense-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Value</th>
+                  <th>Standard Reference</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Operating Voltage</td>
+                  <td>24VDC Nominal (18V to 30V tolerance)</td>
+                  <td>SELV (Safety Extra-Low Voltage)</td>
+                </tr>
+                <tr>
+                  <td>Quiescent Current Draw</td>
+                  <td>4.8 mA</td>
+                  <td>Energy Efficient Standby</td>
+                </tr>
+                <tr>
+                  <td>Active Alert Current</td>
+                  <td>45.0 mA (Strobe + Piezo Siren)</td>
+                  <td>Auxiliary Loop Compliant</td>
+                </tr>
+                <tr>
+                  <td>Trigger-to-Strobe Latency</td>
+                  <td>&lt; 15 milliseconds</td>
+                  <td>Deterministic Solid-State Path</td>
+                </tr>
+                <tr>
+                  <td>Acoustic Output Level</td>
+                  <td>102 dBA @ 1 metre (swept 2.4 - 2.9 kHz)</td>
+                  <td>ISO 7731 Industrial Audible Warning</td>
+                </tr>
+                <tr>
+                  <td>Acoustic Pulse Duration</td>
+                  <td>2.5 seconds ± 0.2s auto-mute</td>
+                  <td>Anti-Habituation Timing Window</td>
+                </tr>
+                <tr>
+                  <td>Optical Flash Frequency</td>
+                  <td>1.5 Hz (90 flashes/min, 360° omni-lens)</td>
+                  <td>BS EN 54-23 Visual Alarm Device</td>
+                </tr>
+                <tr>
+                  <td>Dielectric Isolation</td>
+                  <td>3,750 Vrms optocoupler barrier</td>
+                  <td>IEC 60664-1 Galvanic Separation</td>
+                </tr>
+                <tr>
+                  <td>Enclosure Protection</td>
+                  <td>IP65 Dust & Water Jet Proof</td>
+                  <td>BS EN 60529 Polycarbonate IK08</td>
+                </tr>
+                <tr>
+                  <td>Operating Temperature</td>
+                  <td>-25°C to +60°C (Deep Freeze Rated)</td>
+                  <td>Cold Chain Logistics Ready</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pane-sidebar">
+            <div class="sidebar-box">
+              <span class="box-tag">HUMAN FACTORS</span>
+              <h4>Why 2.5-Second Auto-Stop Works</h4>
+              <p>
+                Continuous reverse beepers cause complete sensory gating: workers report hearing nothing after two days of exposure. 
+                A sharp 2.5-second burst triggers the <em>orienting reflex</em>, halting pedestrian stride before the threshold, 
+                then mutes so personnel working near the bay are not subjected to chronic noise pollution.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: PUWER Compliance Memo -->
+      <div class="tab-pane" id="tab-compliance">
+        <div class="compliance-memo">
+          <div class="memo-header">
+            <div>
+              <span class="memo-tag">ENGINEERING COMPLIANCE MEMO</span>
+              <h3>Statutory Positioning: PUWER 1998 & IEC 60204-1</h3>
+            </div>
+            <div class="memo-ref">REF: BD-PUWER-2026-UK</div>
+          </div>
+          <div class="memo-body">
+            <p>
+              <strong>1. Additive vs Subtractive Safety Function:</strong><br>
+              Under the Provision and Use of Work Equipment Regulations 1998 (PUWER), alterations to work equipment must not compromise intrinsic machine safety. 
+              The BayDoor SDR-24 module is strictly <em>additive</em>: it monitors existing potential-free auxiliary contacts or the 24VDC motor contactor coil in parallel. 
+              It does not wire in series with emergency stops, bottom optical safety edges (DW switches), or photocell safety beams.
+            </p>
+            <p>
+              <strong>2. PUWER Regulation 24 (Warning Devices):</strong><br>
+              Places a statutory duty on dutyholders to ensure equipment incorporates appropriate warning equipment. 
+              BayDoor satisfies this requirement by replacing fallible human compliance (driver honking) with deterministic, automated optical/audible alerts.
+            </p>
+            <p>
+              <strong>3. IEC 60204-1 Clause 9.4 (Failure Protection):</strong><br>
+              In the event of wire severance, internal component short-circuit, or module power loss, the BayDoor module defaults to a de-asserted, silent state. 
+              The door controller's primary safety circuitry operates with complete independence across a 3.75kV galvanic boundary.
+            </p>
+            <p>
+              <strong>4. CE / UKCA Self-Declaration Pathway:</strong><br>
+              Because operating voltage is 24VDC (SELV), the system is exempt from the Low Voltage Directive 2014/35/EU. 
+              CE and UKCA conformity are maintained via direct self-declaration under the EMC Directive 2014/30/EU (EN 61000-6-2 immunity, EN 61000-6-4 emissions) and RoHS 2011/65/EU.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Bill of Materials -->
+      <div class="tab-pane" id="tab-bom">
+        <div class="bom-wrapper">
+          <div class="bom-header-bar">
+            <div>
+              <h3>Bill of Materials: RS Components & Farnell Verified Stock</h3>
+              <p>Off-the-shelf industrial components. Zero custom silicon or proprietary fabrication required.</p>
+            </div>
+            <div class="bom-calculator">
+              <label for="bom-qty-select">BATCH VOLUME:</label>
+              <select id="bom-qty-select">
+                <option value="1">Prototype (1 Bay) - Single Pricing</option>
+                <option value="10">Cluster (10 Bays) - Sub-scale</option>
+                <option value="50" selected>Rollout (50+ Bays) - Volume Discount</option>
+              </select>
+              <div class="bom-total-display">
+                TOTAL PER BAY: <span id="bom-unit-total" class="highlight-copper">£26.97</span>
+              </div>
+            </div>
+          </div>
+
+          <table class="dense-table" id="bom-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Component Specification</th>
+                <th>Distributor & Part No.</th>
+                <th>Qty / Bay</th>
+                <th>1x Price</th>
+                <th>50+ Price</th>
+                <th>Extended</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Combined LED Beacon & Piezo Sounder (24VDC, 102dB, IP65)</td>
+                <td>RS PRO 235-9003 / Farnell 238-4770</td>
+                <td>1</td>
+                <td>£14.80</td>
+                <td>£10.20</td>
+                <td class="item-ext">£10.20</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Optocoupler DIN Terminal Block (24VDC In, 3A Out)</td>
+                <td>Phoenix Contact / RS 341-4770</td>
+                <td>1</td>
+                <td>£9.40</td>
+                <td>£6.80</td>
+                <td class="item-ext">£6.80</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Industrial Polycarbonate Enclosure (120x80x55mm, IP65)</td>
+                <td>Fibox / RS PRO 193-8686</td>
+                <td>1</td>
+                <td>£6.20</td>
+                <td>£4.30</td>
+                <td class="item-ext">£4.30</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Monostable RC Network (220µF 35V Radial + 12kΩ Resistor)</td>
+                <td>Panasonic / RS 839-8664</td>
+                <td>1</td>
+                <td>£0.95</td>
+                <td>£0.45</td>
+                <td class="item-ext">£0.45</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Reverse Polarity & Flyback Protection Diodes (1N4007)</td>
+                <td>Vishay / RS 628-8931</td>
+                <td>2</td>
+                <td>£0.30</td>
+                <td>£0.12</td>
+                <td class="item-ext">£0.12</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Nickel-Plated Brass M16 IP68 Cable Glands & Locknuts</td>
+                <td>RS PRO 827-4221</td>
+                <td>2</td>
+                <td>£2.40</td>
+                <td>£1.60</td>
+                <td class="item-ext">£1.60</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>WAGO 221 Lever Connectors & DIN Mounting Carrier</td>
+                <td>WAGO / RS 845-6671</td>
+                <td>1</td>
+                <td>£1.80</td>
+                <td>£1.10</td>
+                <td class="item-ext">£1.10</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>2-Core Screened Control Cable (0.75mm², 10m cut length)</td>
+                <td>RS PRO YY / RS 660-0442</td>
+                <td>1</td>
+                <td>£3.80</td>
+                <td>£2.40</td>
+                <td class="item-ext">£2.40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Channel Distribution Model -->
+      <div class="tab-pane" id="tab-channel">
+        <div class="pane-grid">
+          <div class="pane-text">
+            <h3>Contractor Channel Strategy: The Door Maintenance Wedge</h3>
+            <p>
+              Direct B2B enterprise sales to warehouse logistics directors take 9 to 18 months of committee reviews. 
+              BayDoor avoids this barrier by distributing exclusively through <strong>regional industrial door maintenance contractors</strong>.
+            </p>
+            <div class="flow-steps">
+              <div class="step-card">
+                <span class="step-num">STAGE 1</span>
+                <h4>Manufacturer to Contractor</h4>
+                <p>Wholesale supply of pre-assembled, DIN-mount SDR-24 kits at <strong>£79.00</strong> (£52.03 gross margin per unit).</p>
+              </div>
+              <div class="step-card">
+                <span class="step-num">STAGE 2</span>
+                <h4>Routine Service Ticket Add-On</h4>
+                <p>Contractor visits site on existing planned preventative maintenance (PPM) contract. Installs unit in 25 minutes.</p>
+              </div>
+              <div class="step-card">
+                <span class="step-num">STAGE 3</span>
+                <h4>Customer Invoice</h4>
+                <p>Billed to warehouse manager at <strong>£165.00</strong>. Contractor earns £86.00 gross margin per bay without sales friction.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pane-sidebar">
+            <div class="sidebar-box highlight-box">
+              <span class="box-tag">COMMERCIAL ARBITRAGE</span>
+              <h4>Why Warehouse Managers Say Yes</h4>
+              <p>
+                An HSE near-miss investigation costs a UK distribution centre an average of £15,000 to £45,000 in downtime and legal audits. 
+                At £165 installed, a 10-bay facility achieves 100% PUWER warning compliance for £1,650: an expense well within local site managers' discretionary sign-off limit.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Controller Pinout Matrix -->
+      <div class="tab-pane" id="tab-controllers">
+        <div class="pane-text">
+          <h3>Universal Controller Auxiliary Terminal Mapping</h3>
+          <p>
+            Verified terminal configurations for the top commercial door control units encountered across UK and European distribution hubs:
+          </p>
+          <table class="dense-table">
+            <thead>
+              <tr>
+                <th>Manufacturer & Model</th>
+                <th>Auxiliary Terminals</th>
+                <th>Signal Type</th>
+                <th>Programming Requirement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Hormann A/B 445 / 460 / WA400</strong></td>
+                <td>Terminals 2.1 & 2.2 (Relay 1)</td>
+                <td>Volt-Free Contact (N.O.)</td>
+                <td>Set Parameter 0.2 = 01 (Run Warning)</td>
+              </tr>
+              <tr>
+                <td><strong>Crawford / ASSA ABLOY 542 / 950</strong></td>
+                <td>Terminals X4: 1 & 2</td>
+                <td>24VDC Switched Output</td>
+                <td>Factory Default Active during Door Travel</td>
+              </tr>
+              <tr>
+                <td><strong>GfA Elektromaten TS 970 / TS 971</strong></td>
+                <td>Terminals X2.1 & X2.2 (Relay 2)</td>
+                <td>Potential-Free Contact (N.O.)</td>
+                <td>Menu 2.5 = 02 (Approach Signal)</td>
+              </tr>
+              <tr>
+                <td><strong>Alpro IB1 Interlock Controller</strong></td>
+                <td>Terminals C1 & NO1</td>
+                <td>5A Changeover Dry Contact</td>
+                <td>Hardware Jumper JP2 = 24V Auxiliary</td>
+              </tr>
+              <tr>
+                <td><strong>CAME Industrial ZL180 / BY-3500</strong></td>
+                <td>Terminals 10 (+24V) & 11 (Flashing)</td>
+                <td>24VDC Powered (1A rated)</td>
+                <td>Direct connection: No programming required</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technical Footer -->
+  <footer class="system-footer">
+    <div class="footer-left">
+      <span>BAYDOOR SDR-24 ARCHITECTURE // DETERMINISTIC BLIND-BAY SAFETY</span>
+      <span class="divider">|</span>
+      <span>INDEPENDENT TECHNICAL SPECIFICATION</span>
+    </div>
+    <div class="footer-right">
+      <span>ZERO COMPLIANCE DEPENDENCY</span>
+      <span class="divider">|</span>
+      <span>LONDON, UNITED KINGDOM</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
