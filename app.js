@@ -1015,21 +1015,41 @@ function setupEventHandlers() {
     }
   });
 
-  // Dossier Tabs Switching
-  UI.dossierTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.dataset.tab;
-      UI.dossierTabBtns.forEach(b => b.classList.remove('active'));
-      UI.tabPanes.forEach(pane => pane.classList.remove('active'));
-
-      btn.classList.add('active');
-      const targetPane = document.getElementById(targetId);
-      if (targetPane) targetPane.classList.add('active');
+  // Drawer Toggle State Indicator Sync
+  const drawers = document.querySelectorAll('.codex-drawer');
+  drawers.forEach(drawer => {
+    drawer.addEventListener('toggle', () => {
+      const toggleSpan = drawer.querySelector('.summary-toggle');
+      if (toggleSpan) {
+        toggleSpan.textContent = drawer.open ? '[-] Collapse' : '[+] Expand';
+      }
     });
   });
 
+  // Smart Referrer-Based Navigation
+  initPortfolioReferrerNav();
+
   // BOM Batch Volume Pricing Calculator
   UI.bomQtySelect.addEventListener('change', updateBomPricing);
+}
+
+// Smart Return-to-Portfolio Detection
+function initPortfolioReferrerNav() {
+  const referrer = document.referrer || '';
+  const urlParams = new URLSearchParams(window.location.search);
+  const refParam = urlParams.get('ref') || '';
+  const isFromPortfolio = referrer.includes('portfolios') || 
+                          referrer.includes('portfolio') ||
+                          refParam === 'portfolio' ||
+                          sessionStorage.getItem('baydoor_from_portfolio') === 'true';
+
+  if (isFromPortfolio) {
+    sessionStorage.setItem('baydoor_from_portfolio', 'true');
+    const navWrapper = document.getElementById('portfolio-nav-wrapper');
+    if (navWrapper) {
+      navWrapper.style.display = 'inline-flex';
+    }
+  }
 }
 
 function resetSimulationState() {

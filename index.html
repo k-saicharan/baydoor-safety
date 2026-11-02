@@ -18,10 +18,27 @@
 </head>
 <body>
 
+  <!-- Top Utility Bar: Smart Referrer Navigation & Direct Inquiries -->
+  <aside class="top-utility-bar">
+    <div class="utility-left">
+      <!-- Smart Return-to-Portfolio (Shown dynamically when visiting via portfolio link) -->
+      <div class="portfolio-nav-wrapper" id="portfolio-nav-wrapper" style="display: none;">
+        <a href="https://portfolios-chi-one.vercel.app/#on-the-floor" class="nav-portfolio-chip" id="nav-portfolio-link">
+          <span class="back-arrow">&larr;</span> Back to Portfolio : Finding the edge
+        </a>
+      </div>
+      <span class="utility-brand">BAYDOOR SDR-24 // PHYSICAL SAFETY SPECIFICATION</span>
+    </div>
+    <div class="utility-right">
+      <span class="contact-pill">Sai Charan : London, UK</span>
+      <a href="#contact-station" class="contact-action-link">[Contact &amp; Site Pilot Inquiries &darr;]</a>
+    </div>
+  </aside>
+
   <!-- Masthead & System Identity Bar -->
   <header class="system-masthead">
     <div class="masthead-left">
-      <div class="system-tag">ENGINEERING SPECIFICATION & DIGITAL TWIN // REV 2.4</div>
+      <div class="system-tag">ENGINEERING SPECIFICATION &amp; DIGITAL TWIN // REV 2.4</div>
       <h1 class="system-title">BayDoor <span>SDR-24</span></h1>
       <p class="system-subtitle">Deterministic Blind-Bay Safety Warning System : 24VDC Industrial Control Interface</p>
     </div>
@@ -32,12 +49,12 @@
         <span class="meta-value">PUWER 1998 Reg 24 : IEC 60204-1</span>
       </div>
       <div class="meta-block">
-        <span class="meta-label">ORIGIN & LOCATION</span>
+        <span class="meta-label">ORIGIN &amp; LOCATION</span>
         <span class="meta-value">London, UK : Logistics Operations</span>
       </div>
       <div class="meta-block">
         <span class="meta-label">HARDWARE BOM</span>
-        <span class="meta-value highlight-copper">£39.65 Single / £26.97 Bulk</span>
+        <span class="meta-value highlight-copper">&pound;39.65 Single / &pound;26.97 Bulk</span>
       </div>
       <div class="audio-control-wrapper">
         <button id="btn-toggle-audio" class="action-btn btn-secondary" title="Toggle ISO 7731 Swept Piezo Sounder">
@@ -156,7 +173,6 @@
       <!-- Live Electrical State Diagram (Interactive SVG) -->
       <div class="circuit-diagram-wrapper">
         <svg id="circuit-svg" viewBox="0 0 540 380" class="circuit-svg">
-          <!-- Background Grid & Wire Traces -->
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
               <path d="M 0 0 L 10 5 L 0 10 z" fill="#b38a5f" />
@@ -214,11 +230,11 @@
 
             <!-- Timing Capacitor & Resistor Indicator -->
             <rect x="215" y="260" width="45" height="16" class="comp-box" />
-            <text x="220" y="272" class="comp-val">12 kΩ</text>
+            <text x="220" y="272" class="comp-val">12 k&Omega;</text>
 
             <line x1="285" y1="255" x2="285" y2="280" class="cap-plate" />
             <line x1="292" y1="255" x2="292" y2="280" class="cap-plate" />
-            <text x="276" y="300" class="comp-val">220 µF</text>
+            <text x="276" y="300" class="comp-val">220 &micro;F</text>
 
             <!-- Charge Progress Indicator -->
             <rect x="215" y="325" width="110" height="8" class="charge-bar-bg" />
@@ -248,15 +264,10 @@
           </g>
 
           <!-- Connecting Bus Wires -->
-          <!-- Power wire from Controller to Opto -->
           <line id="wire-pwr" x1="145" y1="85" x2="195" y2="85" class="wire-bus" />
-          <!-- Signal wire from Controller Aux to Opto -->
           <line id="wire-aux" x1="145" y1="135" x2="195" y2="135" class="wire-bus" />
-          <!-- Opto to Timer Bus -->
           <line id="wire-opto-timer" x1="315" y1="100" x2="315" y2="200" class="wire-bus" />
-          <!-- Timer to Output Bus -->
           <line id="wire-timer-out" x1="345" y1="270" x2="380" y2="270" class="wire-bus" />
-          <!-- Strobe Power Bus -->
           <line id="wire-strobe-bus" x1="345" y1="85" x2="380" y2="85" class="wire-bus" />
         </svg>
       </div>
@@ -277,7 +288,7 @@
         </div>
         <div class="telem-cell">
           <span class="telem-label">DIELECTRIC ISO</span>
-          <span class="telem-value">> 3,750 Vrms</span>
+          <span class="telem-value">&gt; 3,750 Vrms</span>
         </div>
       </div>
 
@@ -296,20 +307,50 @@
 
   </main>
 
-  <!-- Technical Brief, Compliance & Specification Drawer Tabs -->
-  <section class="dossier-section">
-    <div class="dossier-tabs-nav">
-      <button class="dossier-tab-btn active" data-tab="tab-specs">Technical Specification</button>
-      <button class="dossier-tab-btn" data-tab="tab-compliance">PUWER 1998 Compliance</button>
-      <button class="dossier-tab-btn" data-tab="tab-bom">Bill of Materials (£39.65)</button>
-      <button class="dossier-tab-btn" data-tab="tab-channel">Contractor Channel Model</button>
-      <button class="dossier-tab-btn" data-tab="tab-controllers">Controller Pinout Matrix</button>
+  <!-- High-Level Executive Summary Strip: Simple, Fast, Unstuffy -->
+  <section class="executive-summary-strip">
+    <div class="exec-card">
+      <span class="exec-num">01 / THE HAZARD</span>
+      <h3 class="exec-title">The Blind-Bay Collision Trap</h3>
+      <p class="exec-desc">
+        Forklifts cross high-speed bay doors at 8 to 12 km/h. Ambient industrial reverberation (80 to 85 dBA) drowns vehicle horns, and warehouse operators skip manual horn honking in up to 48% of high-speed passes.
+      </p>
+    </div>
+    <div class="exec-card highlight-border">
+      <span class="exec-num">02 / THE INTERLOCK</span>
+      <h3 class="exec-title">Deterministic Solid-State Alert</h3>
+      <p class="exec-desc">
+        BayDoor monitors the door motor contactor across a 3.75kV galvanic isolation barrier. At t=15ms of motor energization, it triggers an omnidirectional strobe and 2.5s swept piezo alert on the blind side, 3.2s before vehicle arrival.
+      </p>
+    </div>
+    <div class="exec-card">
+      <span class="exec-num">03 / THE REALITY</span>
+      <h3 class="exec-title">Zero Fragile Sensors or Radio Tags</h3>
+      <p class="exec-desc">
+        No cloud connectivity, no RF batteries, no camera calibration, and no dirt-obscured mirrors. Sub-&pound;50 BOM using off-the-shelf industrial parts. Retrofits in 25 minutes during routine planned door servicing.
+      </p>
+    </div>
+  </section>
+
+  <!-- Collapsible Technical Dossier Drawers: Deep Information on Demand -->
+  <section class="drawers-section">
+    <div class="drawers-header">
+      <span class="view-tag">DEEP TECHNICAL SPECIFICATIONS &amp; REGULATORY ARCHITECTURE</span>
+      <h2 class="view-title">Engineering Documentation Dossier</h2>
+      <p class="drawers-lead">
+        Click any drawer below to inspect full statutory compliance records, itemized RS/Farnell component pricing, contractor commercial economics, or door controller wiring pinouts.
+      </p>
     </div>
 
-    <div class="dossier-content-card">
-      
-      <!-- Tab 1: Engineering Specs -->
-      <div class="tab-pane active" id="tab-specs">
+    <!-- Drawer 1: Engineering Parameters Table -->
+    <details class="codex-drawer" id="drawer-specs">
+      <summary class="drawer-summary">
+        <span class="summary-code">[SPEC-01]</span>
+        <span class="summary-title">Technical Parameters &amp; Standard Reference Specifications</span>
+        <span class="summary-meta">Operating Voltage, Acoustic Levels, Latency, IP Ratings</span>
+        <span class="summary-toggle">[+] Expand</span>
+      </summary>
+      <div class="drawer-body">
         <div class="pane-grid">
           <div class="pane-text">
             <h3>BayDoor SDR-24 Engineering Parameters</h3>
@@ -353,12 +394,12 @@
                 </tr>
                 <tr>
                   <td>Acoustic Pulse Duration</td>
-                  <td>2.5 seconds ± 0.2s auto-mute</td>
+                  <td>2.5 seconds &plusmn; 0.2s auto-mute</td>
                   <td>Anti-Habituation Timing Window</td>
                 </tr>
                 <tr>
                   <td>Optical Flash Frequency</td>
-                  <td>1.5 Hz (90 flashes/min, 360° omni-lens)</td>
+                  <td>1.5 Hz (90 flashes/min, 360&deg; omni-lens)</td>
                   <td>BS EN 54-23 Visual Alarm Device</td>
                 </tr>
                 <tr>
@@ -368,12 +409,12 @@
                 </tr>
                 <tr>
                   <td>Enclosure Protection</td>
-                  <td>IP65 Dust & Water Jet Proof</td>
+                  <td>IP65 Dust &amp; Water Jet Proof</td>
                   <td>BS EN 60529 Polycarbonate IK08</td>
                 </tr>
                 <tr>
                   <td>Operating Temperature</td>
-                  <td>-25°C to +60°C (Deep Freeze Rated)</td>
+                  <td>-25&deg;C to +60&deg;C (Deep Freeze Rated)</td>
                   <td>Cold Chain Logistics Ready</td>
                 </tr>
               </tbody>
@@ -392,14 +433,22 @@
           </div>
         </div>
       </div>
+    </details>
 
-      <!-- Tab 2: PUWER Compliance Memo -->
-      <div class="tab-pane" id="tab-compliance">
+    <!-- Drawer 2: PUWER Statutory Compliance Memo -->
+    <details class="codex-drawer" id="drawer-compliance">
+      <summary class="drawer-summary">
+        <span class="summary-code">[LAW-02]</span>
+        <span class="summary-title">Statutory Legal Brief: PUWER 1998 &amp; IEC 60204-1 Fail-Safe Architecture</span>
+        <span class="summary-meta">HSE Safety Duty, Additive Integration, UKCA Pathway</span>
+        <span class="summary-toggle">[+] Expand</span>
+      </summary>
+      <div class="drawer-body">
         <div class="compliance-memo">
           <div class="memo-header">
             <div>
               <span class="memo-tag">ENGINEERING COMPLIANCE MEMO</span>
-              <h3>Statutory Positioning: PUWER 1998 & IEC 60204-1</h3>
+              <h3>Statutory Positioning: PUWER 1998 &amp; IEC 60204-1</h3>
             </div>
             <div class="memo-ref">REF: BD-PUWER-2026-UK</div>
           </div>
@@ -413,7 +462,7 @@
             <p>
               <strong>2. PUWER Regulation 24 (Warning Devices):</strong><br>
               Places a statutory duty on dutyholders to ensure equipment incorporates appropriate warning equipment. 
-              BayDoor satisfies this requirement by replacing fallible human compliance (driver honking) with deterministic, automated optical/audible alerts.
+              BayDoor satisfies this requirement by replacing fallible human compliance (driver honking) with deterministic, automated optical and audible alerts.
             </p>
             <p>
               <strong>3. IEC 60204-1 Clause 9.4 (Failure Protection):</strong><br>
@@ -428,24 +477,32 @@
           </div>
         </div>
       </div>
+    </details>
 
-      <!-- Tab 3: Bill of Materials -->
-      <div class="tab-pane" id="tab-bom">
+    <!-- Drawer 3: Bill of Materials & Interactive Volume Pricing -->
+    <details class="codex-drawer" id="drawer-bom">
+      <summary class="drawer-summary">
+        <span class="summary-code">[BOM-03]</span>
+        <span class="summary-title">Itemized Bill of Materials &amp; Volume Calculator (&pound;26.97 - RS &amp; Farnell)</span>
+        <span class="summary-meta">Off-The-Shelf Distributor Stock Numbers, Batch Sizing</span>
+        <span class="summary-toggle">[+] Expand</span>
+      </summary>
+      <div class="drawer-body">
         <div class="bom-wrapper">
           <div class="bom-header-bar">
             <div>
-              <h3>Bill of Materials: RS Components & Farnell Verified Stock</h3>
+              <h3>Bill of Materials: RS Components &amp; Farnell Verified Stock</h3>
               <p>Off-the-shelf industrial components. Zero custom silicon or proprietary fabrication required.</p>
             </div>
             <div class="bom-calculator">
               <label for="bom-qty-select">BATCH VOLUME:</label>
               <select id="bom-qty-select">
-                <option value="1">Prototype (1 Bay) - Single Pricing</option>
-                <option value="10">Cluster (10 Bays) - Sub-scale</option>
-                <option value="50" selected>Rollout (50+ Bays) - Volume Discount</option>
+                <option value="1">Prototype (1 Bay) - Single Pricing (&pound;39.65)</option>
+                <option value="10">Cluster (10 Bays) - Sub-scale (&pound;32.40)</option>
+                <option value="50" selected>Rollout (50+ Bays) - Volume Discount (&pound;26.97)</option>
               </select>
               <div class="bom-total-display">
-                TOTAL PER BAY: <span id="bom-unit-total" class="highlight-copper">£26.97</span>
+                TOTAL PER BAY: <span id="bom-unit-total" class="highlight-copper">&pound;26.97</span>
               </div>
             </div>
           </div>
@@ -455,7 +512,7 @@
               <tr>
                 <th>Item</th>
                 <th>Component Specification</th>
-                <th>Distributor & Part No.</th>
+                <th>Distributor &amp; Part No.</th>
                 <th>Qty / Bay</th>
                 <th>1x Price</th>
                 <th>50+ Price</th>
@@ -465,95 +522,103 @@
             <tbody>
               <tr>
                 <td>1</td>
-                <td>Combined LED Beacon & Piezo Sounder (24VDC, 102dB, IP65)</td>
+                <td>Combined LED Beacon &amp; Piezo Sounder (24VDC, 102dB, IP65)</td>
                 <td>RS PRO 235-9003 / Farnell 238-4770</td>
                 <td>1</td>
-                <td>£14.80</td>
-                <td>£10.20</td>
-                <td class="item-ext">£10.20</td>
+                <td>&pound;14.80</td>
+                <td>&pound;10.20</td>
+                <td class="item-ext">&pound;10.20</td>
               </tr>
               <tr>
                 <td>2</td>
                 <td>Optocoupler DIN Terminal Block (24VDC In, 3A Out)</td>
                 <td>Phoenix Contact / RS 341-4770</td>
                 <td>1</td>
-                <td>£9.40</td>
-                <td>£6.80</td>
-                <td class="item-ext">£6.80</td>
+                <td>&pound;9.40</td>
+                <td>&pound;6.80</td>
+                <td class="item-ext">&pound;6.80</td>
               </tr>
               <tr>
                 <td>3</td>
                 <td>Industrial Polycarbonate Enclosure (120x80x55mm, IP65)</td>
                 <td>Fibox / RS PRO 193-8686</td>
                 <td>1</td>
-                <td>£6.20</td>
-                <td>£4.30</td>
-                <td class="item-ext">£4.30</td>
+                <td>&pound;6.20</td>
+                <td>&pound;4.30</td>
+                <td class="item-ext">&pound;4.30</td>
               </tr>
               <tr>
                 <td>4</td>
-                <td>Monostable RC Network (220µF 35V Radial + 12kΩ Resistor)</td>
+                <td>Monostable RC Network (220&micro;F 35V Radial + 12k&Omega; Resistor)</td>
                 <td>Panasonic / RS 839-8664</td>
                 <td>1</td>
-                <td>£0.95</td>
-                <td>£0.45</td>
-                <td class="item-ext">£0.45</td>
+                <td>&pound;0.95</td>
+                <td>&pound;0.45</td>
+                <td class="item-ext">&pound;0.45</td>
               </tr>
               <tr>
                 <td>5</td>
-                <td>Reverse Polarity & Flyback Protection Diodes (1N4007)</td>
+                <td>Reverse Polarity &amp; Flyback Protection Diodes (1N4007)</td>
                 <td>Vishay / RS 628-8931</td>
                 <td>2</td>
-                <td>£0.30</td>
-                <td>£0.12</td>
-                <td class="item-ext">£0.12</td>
+                <td>&pound;0.30</td>
+                <td>&pound;0.12</td>
+                <td class="item-ext">&pound;0.12</td>
               </tr>
               <tr>
                 <td>6</td>
-                <td>Nickel-Plated Brass M16 IP68 Cable Glands & Locknuts</td>
+                <td>Nickel-Plated Brass M16 IP68 Cable Glands &amp; Locknuts</td>
                 <td>RS PRO 827-4221</td>
                 <td>2</td>
-                <td>£2.40</td>
-                <td>£1.60</td>
-                <td class="item-ext">£1.60</td>
+                <td>&pound;2.40</td>
+                <td>&pound;1.60</td>
+                <td class="item-ext">&pound;1.60</td>
               </tr>
               <tr>
                 <td>7</td>
-                <td>WAGO 221 Lever Connectors & DIN Mounting Carrier</td>
+                <td>WAGO 221 Lever Connectors &amp; DIN Mounting Carrier</td>
                 <td>WAGO / RS 845-6671</td>
                 <td>1</td>
-                <td>£1.80</td>
-                <td>£1.10</td>
-                <td class="item-ext">£1.10</td>
+                <td>&pound;1.80</td>
+                <td>&pound;1.10</td>
+                <td class="item-ext">&pound;1.10</td>
               </tr>
               <tr>
                 <td>8</td>
-                <td>2-Core Screened Control Cable (0.75mm², 10m cut length)</td>
+                <td>2-Core Screened Control Cable (0.75mm&sup2;, 10m cut length)</td>
                 <td>RS PRO YY / RS 660-0442</td>
                 <td>1</td>
-                <td>£3.80</td>
-                <td>£2.40</td>
-                <td class="item-ext">£2.40</td>
+                <td>&pound;3.80</td>
+                <td>&pound;2.40</td>
+                <td class="item-ext">&pound;2.40</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+    </details>
 
-      <!-- Tab 4: Channel Distribution Model -->
-      <div class="tab-pane" id="tab-channel">
+    <!-- Drawer 4: Contractor Channel Strategy -->
+    <details class="codex-drawer" id="drawer-channel">
+      <summary class="drawer-summary">
+        <span class="summary-code">[DIST-04]</span>
+        <span class="summary-title">Contractor Channel Strategy: The Door Maintenance Wedge</span>
+        <span class="summary-meta">Van Stock Model, 25-Minute PPM Retrofit, Margin Breakdown</span>
+        <span class="summary-toggle">[+] Expand</span>
+      </summary>
+      <div class="drawer-body">
         <div class="pane-grid">
           <div class="pane-text">
-            <h3>Contractor Channel Strategy: The Door Maintenance Wedge</h3>
+            <h3>Contractor Channel Strategy: The Maintenance Wedge</h3>
             <p>
-              Direct B2B enterprise sales to warehouse logistics directors take 9 to 18 months of committee reviews. 
-              BayDoor avoids this barrier by distributing exclusively through <strong>regional industrial door maintenance contractors</strong>.
+              Direct enterprise sales to warehouse logistics directors take 9 to 18 months of committee reviews. 
+              BayDoor bypasses this bottleneck by distributing through <strong>regional industrial door maintenance contractors</strong>.
             </p>
             <div class="flow-steps">
               <div class="step-card">
                 <span class="step-num">STAGE 1</span>
                 <h4>Manufacturer to Contractor</h4>
-                <p>Wholesale supply of pre-assembled, DIN-mount SDR-24 kits at <strong>£79.00</strong> (£52.03 gross margin per unit).</p>
+                <p>Wholesale supply of pre-assembled, DIN-mount SDR-24 kits at <strong>&pound;79.00</strong> (&pound;52.03 gross margin per unit).</p>
               </div>
               <div class="step-card">
                 <span class="step-num">STAGE 2</span>
@@ -563,7 +628,7 @@
               <div class="step-card">
                 <span class="step-num">STAGE 3</span>
                 <h4>Customer Invoice</h4>
-                <p>Billed to warehouse manager at <strong>£165.00</strong>. Contractor earns £86.00 gross margin per bay without sales friction.</p>
+                <p>Billed to warehouse manager at <strong>&pound;165.00</strong>. Contractor earns &pound;86.00 gross margin per bay without sales friction.</p>
               </div>
             </div>
           </div>
@@ -572,16 +637,24 @@
               <span class="box-tag">COMMERCIAL ARBITRAGE</span>
               <h4>Why Warehouse Managers Say Yes</h4>
               <p>
-                An HSE near-miss investigation costs a UK distribution centre an average of £15,000 to £45,000 in downtime and legal audits. 
-                At £165 installed, a 10-bay facility achieves 100% PUWER warning compliance for £1,650: an expense well within local site managers' discretionary sign-off limit.
+                An HSE near-miss investigation costs a UK distribution centre an average of &pound;15,000 to &pound;45,000 in downtime and legal audits. 
+                At &pound;165 installed, a 10-bay facility achieves 100% PUWER warning compliance for &pound;1,650: an expense well within local site managers' discretionary sign-off limit.
               </p>
             </div>
           </div>
         </div>
       </div>
+    </details>
 
-      <!-- Tab 5: Controller Pinout Matrix -->
-      <div class="tab-pane" id="tab-controllers">
+    <!-- Drawer 5: Universal Controller Terminal Pinout Matrix -->
+    <details class="codex-drawer" id="drawer-controllers">
+      <summary class="drawer-summary">
+        <span class="summary-code">[ELEC-05]</span>
+        <span class="summary-title">Universal Controller Auxiliary Terminal Mapping Matrix</span>
+        <span class="summary-meta">Hormann, Crawford, GfA Elektromaten, Alpro, CAME</span>
+        <span class="summary-toggle">[+] Expand</span>
+      </summary>
+      <div class="drawer-body">
         <div class="pane-text">
           <h3>Universal Controller Auxiliary Terminal Mapping</h3>
           <p>
@@ -590,7 +663,7 @@
           <table class="dense-table">
             <thead>
               <tr>
-                <th>Manufacturer & Model</th>
+                <th>Manufacturer &amp; Model</th>
                 <th>Auxiliary Terminals</th>
                 <th>Signal Type</th>
                 <th>Programming Requirement</th>
@@ -599,31 +672,31 @@
             <tbody>
               <tr>
                 <td><strong>Hormann A/B 445 / 460 / WA400</strong></td>
-                <td>Terminals 2.1 & 2.2 (Relay 1)</td>
+                <td>Terminals 2.1 &amp; 2.2 (Relay 1)</td>
                 <td>Volt-Free Contact (N.O.)</td>
                 <td>Set Parameter 0.2 = 01 (Run Warning)</td>
               </tr>
               <tr>
                 <td><strong>Crawford / ASSA ABLOY 542 / 950</strong></td>
-                <td>Terminals X4: 1 & 2</td>
+                <td>Terminals X4: 1 &amp; 2</td>
                 <td>24VDC Switched Output</td>
                 <td>Factory Default Active during Door Travel</td>
               </tr>
               <tr>
                 <td><strong>GfA Elektromaten TS 970 / TS 971</strong></td>
-                <td>Terminals X2.1 & X2.2 (Relay 2)</td>
+                <td>Terminals X2.1 &amp; X2.2 (Relay 2)</td>
                 <td>Potential-Free Contact (N.O.)</td>
                 <td>Menu 2.5 = 02 (Approach Signal)</td>
               </tr>
               <tr>
                 <td><strong>Alpro IB1 Interlock Controller</strong></td>
-                <td>Terminals C1 & NO1</td>
+                <td>Terminals C1 &amp; NO1</td>
                 <td>5A Changeover Dry Contact</td>
                 <td>Hardware Jumper JP2 = 24V Auxiliary</td>
               </tr>
               <tr>
                 <td><strong>CAME Industrial ZL180 / BY-3500</strong></td>
-                <td>Terminals 10 (+24V) & 11 (Flashing)</td>
+                <td>Terminals 10 (+24V) &amp; 11 (Flashing)</td>
                 <td>24VDC Powered (1A rated)</td>
                 <td>Direct connection: No programming required</td>
               </tr>
@@ -631,7 +704,53 @@
           </table>
         </div>
       </div>
+    </details>
 
+  </section>
+
+  <!-- Inbound Outreach & Pilot Contact Station (Prominent for Traffic Conversion) -->
+  <section class="inbound-contact-card" id="contact-station">
+    <div class="contact-header">
+      <span class="view-tag">TECHNICAL INQUIRIES &amp; DEPLOYMENT PILOTS</span>
+      <h2 class="view-title">Deploy BayDoor SDR-24 on Your Site</h2>
+      <p class="contact-lead">
+        Direct technical inquiries for site trials, industrial door contractor distribution packs, or custom enclosure schematics.
+      </p>
+    </div>
+    
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span class="contact-label">LEAD ARCHITECT &amp; PROTOTYPER</span>
+        <span class="contact-val">Sai Charan</span>
+        <span class="contact-sub">Operations &amp; Systems Prototyper &middot; MBA (Commendation)</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">LOCATION &amp; OPERATIONAL BASE</span>
+        <span class="contact-val">London, United Kingdom</span>
+        <span class="contact-sub">Available for UK on-site pilot reviews &amp; audits</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">DIRECT EMAIL FOR INQUIRIES</span>
+        <a href="mailto:saicharan9977@gmail.com?subject=BayDoor%20SDR-24%20Site%20Pilot%20Inquiry" class="contact-link">saicharan9977@gmail.com &nearr;</a>
+        <span class="contact-sub">Prompt direct reply for logistics operators &amp; contractors</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">SOURCE REPOSITORY &amp; CAD</span>
+        <a href="https://github.com/k-saicharan/baydoor-safety" target="_blank" rel="noopener" class="contact-link">github.com/k-saicharan/baydoor-safety &nearr;</a>
+        <span class="contact-sub">Open-hardware specification &amp; distribution pack</span>
+      </div>
+    </div>
+
+    <div class="contact-action-bar">
+      <a href="mailto:saicharan9977@gmail.com?subject=BayDoor%20SDR-24%20Site%20Pilot%20Request&body=Hi%20Sai,%0A%0AWe%20are%20interested%20in%20evaluating%20the%20BayDoor%20SDR-24%20warning%20specification%20for%20our%20loading%20bays.%0A%0AFacility%20Type:%0ANumber%20of%20Bays:%0ACurrent%20Door%20Controllers:%0A" class="action-btn btn-primary btn-pilot">
+        [REQUEST SITE PILOT SPECIFICATION // EMAIL DIRECT]
+      </a>
+      <a href="https://github.com/k-saicharan/baydoor-safety/blob/main/DISTRIBUTION.md" target="_blank" rel="noopener" class="action-btn btn-secondary">
+        [VIEW CONTRACTOR DISTRIBUTION PACK &nearr;]
+      </a>
+      <a href="https://portfolios-chi-one.vercel.app/#on-the-floor" class="action-btn btn-tertiary">
+        [VIEW PORTFOLIO // FINDING THE EDGE &nearr;]
+      </a>
     </div>
   </section>
 
